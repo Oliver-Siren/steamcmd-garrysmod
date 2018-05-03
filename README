@@ -8,7 +8,7 @@ Digital Ocean -palvelun ylläpitämä virtuaalipalvelin: 1 GB Memory / 25 GB Dis
 Desktop: Intel i5-3570K @3.4GHz, Nvidia Geforce GTX 970, 16GB DDR3-RAM, Xubuntu 16.04 LTS x64 
 
 Käyttöohje:
-Huom. käyttäjän nimi tulee olla Konsta jotta kaikki toimii. 
+Huom. käyttäjän nimi tulee olla Konsta. Mikäli haluat käyttää eri käyttäjänimeä muuta tiedostoista "srv/salt/steamcmd/init.sls" ja "srv/salt/steamcmd/garrysmod_ds" kohdat "konsta" haluamaksesi. 
 1. Lataa bash-scripti tietokoneellesi komennolla: wget https://raw.githubusercontent.com/a1702645/steamcmd-garrysmod/master/run.sh
 2. Aja run.sh scripti komennolla: bash run.sh
 
