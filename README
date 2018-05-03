@@ -1,4 +1,4 @@
-Kurssin Palvelinten Hallinta lopputyö:
+SteamCMD:n asennus ja Garry's Mod Dedicated Serverin asennus ja käyttöönotto.
 
 Tehtävien toimeksianto: http://terokarvinen.com/2018/aikataulu-%e2%80%93-palvelinten-hallinta-ict4tn022-4-ti-5-ke-5-loppukevat-2018-5p
 
@@ -18,7 +18,8 @@ Aloitin työn luomalla tiedoston srv/salt/install_steamcmd/init.sls.
 init.sls ajaa ensin komennon, joka mahdollistaa 32bittisten ohjelmien asennuksen.
 SteamCMD:n asennuksen automatisoinnissa ongelmaksi muodostui lisenssin hyväksyminen, sillä Salt ei tee sitä itsekseen.
 Ongelma on ratkaistavissa debconf ohjelmalla, mutta en saanut sitä silti toimimaan SteamCMD:n asennuksessa.
-Ratkaisu löytyi automatisoimalla ensin ohjelman Steam asennus, sillä debconf-asetukset toimivat siinä. Steamin asennuttua ei SteamCMD enää kysy lisenssistä. 
+Ratkaisu löytyi automatisoimalla ensin ohjelman Steam asennus, sillä debconf-asetukset toimivat siinä. Steamin asennuttua ei SteamCMD enää kysy lisenssistä.
+Saltin suorittaessa asennustilaa sanoo se virheellisesti, ettei SteamCMD:n asennus onnistunut. 
 
 Seuraavaksi loin steamcmd/init.sls -tiedoston ja garrysmod_ds.txt tiedoston. steamcmd/init.sls kopioi garrysmod_ds.txt tiedoston polkuun /home/konsta/garrysmod_ds ja ajaa sen SteamCMD:ssä. Garrysmod_ds -skripti suorittaa Garry's Mod Dedicated Serverin asennuksen SteamCMD:ssä. 
 
