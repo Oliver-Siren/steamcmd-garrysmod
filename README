@@ -38,6 +38,11 @@ state.highstate: aja top.sls, joka ajaa install_steamcmd ja steamcmd -tilat.
 cheat.sh: aja garrysmod_ds -skripti ja start-server.sh
 start-server.sh: käynnistä pelipalvelin.
 
-
+Lähteet:
+https://developer.valvesoftware.com/wiki/SteamCMD#Linux.2FOS_X
+https://developer.valvesoftware.com/wiki/Dedicated_Servers_List
+https://developer.valvesoftware.com/wiki/SteamCMD#32-bit_libraries_on_64-bit_Linux_systems
+https://askubuntu.com/questions/506909/how-can-i-accept-the-lience-agreement-for-steam-prior-to-apt-get-install/1017487#1017487
+http://terokarvinen.com/2016/publish-your-project-with-github
 
 
