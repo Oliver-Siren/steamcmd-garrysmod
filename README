@@ -1,0 +1,42 @@
+Kurssin Palvelinten Hallinta lopputyö:
+
+Tehtävien toimeksianto: http://terokarvinen.com/2018/aikataulu-%e2%80%93-palvelinten-hallinta-ict4tn022-4-ti-5-ke-5-loppukevat-2018-5p
+
+Tehtävissä käytetyt laitteet:
+HP ProBook 655 G2: Xubuntu 16.04 LTS x64
+Digital Ocean -palvelun ylläpitämä virtuaalipalvelin: 1 GB Memory / 25 GB Disk / AMS3 - Ubuntu 16.04.3 x64
+Desktop: Intel i5-3570K @3.4GHz, Nvidia Geforce GTX 970, 16GB DDR3-RAM, Xubuntu 16.04 LTS x64 
+
+Käyttöohje:
+Huom. käyttäjän nimi tulee olla Konsta jotta kaikki toimii. 
+1. Lataa bash-scripti tietokoneellesi komennolla: wget https://raw.githubusercontent.com/a1702645/steamcmd-garrysmod/master/run.sh
+2. Aja run.sh scripti komennolla: bash run.sh
+
+Päätin asentaa SteamCMD:n, jolla taas asentaisin Garry's Mod Dedicated Serverin.
+Aloitin työn luomalla tiedoston srv/salt/install_steamcmd/init.sls.
+
+init.sls ajaa ensin komennon, joka mahdollistaa 32bittisten ohjelmien asennuksen.
+SteamCMD:n asennuksen automatisoinnissa ongelmaksi muodostui lisenssin hyväksyminen, sillä Salt ei tee sitä itsekseen.
+Ongelma on ratkaistavissa debconf ohjelmalla, mutta en saanut sitä silti toimimaan SteamCMD:n asennuksessa.
+Ratkaisu löytyi automatisoimalla ensin ohjelman Steam asennus, sillä debconf-asetukset toimivat siinä. Steamin asennuttua ei SteamCMD enää kysy lisenssistä. 
+
+Seuraavaksi loin steamcmd/init.sls -tiedoston ja garrysmod_ds.txt tiedoston. steamcmd/init.sls kopioi garrysmod_ds.txt tiedoston polkuun /home/konsta/garrysmod_ds ja ajaa sen SteamCMD:ssä. Garrysmod_ds -skripti suorittaa Garry's Mod Dedicated Serverin asennuksen SteamCMD:ssä. 
+
+Loin myös top.sls -tiedoston, joka ajaa tilat install_steamcmd ja steamcmd.
+
+SteamCMD ei jostain syystä suostu ajamaan garrysmod_ds -skriptiä Saltilla komennettaessa, mutta paikallisesti suostuu, joten jouduin luomaan bash-tiedoston cheat.sh, joka ajaa SteamCMD:llä garrysmod_ds-skriptin ja ajaa start-server.sh -tiedoston, joka käynnistää SteamCMD:n asentaman Dedicated Serverin halutuilla asetuksilla. 
+
+Loin tiedoston run.sh, joka asentaa Gitin ja Salt-minionin ja kloonaa tiedostot Gitistä. Se myös ajaa highstate.sh -tiedoston.
+
+Highstate.sh ajaa Saltilla state.highstate, sekä cheat.sh -skriptin.
+
+Koottuna: 
+run.sh: Asenna Git ja Salt-minion, kloonaa Gitistä, aja highstate.sh
+highstate.sh: aja state.highstate, aja cheat.sh
+state.highstate: aja top.sls, joka ajaa install_steamcmd ja steamcmd -tilat.
+cheat.sh: aja garrysmod_ds -skripti ja start-server.sh
+start-server.sh: käynnistä pelipalvelin.
+
+
+
+
