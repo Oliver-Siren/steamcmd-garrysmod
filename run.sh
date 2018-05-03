@@ -6,6 +6,6 @@ echo "Retrieving and Applying Settings"
 echo 'master: localhost' |sudo tee /etc/salt/minion
 echo "Installing SteamCMD"
 git clone https://github.com/a1702645/steamcmd-garrysmod
-cd steamcmd-garrysmod
-bash higstate.sh
-echo "Done"
+echo "done"
+bash steamcmd-garrysmod/higstate.sh
+
