@@ -14,6 +14,6 @@ restart_apache2:
 
 ufw:
   pkg.installed
-  cmd.run:
+    cmd.run:
     - name: 'sudo ufw allow 27015/tcp'
     - name: 'sudo ufw enable'
