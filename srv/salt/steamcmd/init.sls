@@ -1,7 +1,7 @@
-/home/konsta/garrysmod_ds:
+~/garrysmod_ds:
   file:
     - managed
     - source: salt://steamcmd/garrysmod_ds
 run_script: 
   cmd.run:
-    - name: 'steamcmd +runscript /home/konsta/garrysmod_ds'
+    - name: 'steamcmd +runscript ~/garrysmod_ds'
