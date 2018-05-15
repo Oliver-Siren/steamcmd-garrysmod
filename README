@@ -11,7 +11,9 @@ Käyttöohje:
 1. Lataa bash-scripti tietokoneellesi komennolla: wget https://raw.githubusercontent.com/a1702645/steamcmd-garrysmod/master/run.sh
 2. Aja run.sh scripti komennolla: bash run.sh
 
-Päätin asentaa SteamCMD:n, jolla taas asentaisin Garry's Mod Dedicated Serverin.
+Päätin asentaa SteamCMD:n (komentokehoteversio pelialusta Steamista), jolla taas asentaisin Garry's Mod Dedicated Serverin.
+Valitettavasti en saanut SteamCMD:lle ohjatussa komennossa määriteltävää asennusta toimimaan käyttäjänimestä riippumatta. Ongelmana on sijainnin määrittäminen käyttäjän kotihakemistoon.
+
 Aloitin työn luomalla tiedoston srv/salt/install_steamcmd/init.sls.
 
 init.sls ajaa ensin komennon, joka mahdollistaa 32bittisten ohjelmien asennuksen.
@@ -20,22 +22,20 @@ Ongelma on ratkaistavissa debconf ohjelmalla, mutta en saanut sitä silti toimim
 Ratkaisu löytyi automatisoimalla ensin ohjelman Steam asennus, sillä debconf-asetukset toimivat siinä. Steamin asennuttua ei SteamCMD enää kysy lisenssistä.
 Saltin suorittaessa asennustilaa sanoo se virheellisesti, ettei SteamCMD:n asennus onnistunut. 
 
-Seuraavaksi loin steamcmd/init.sls -tiedoston ja garrysmod_ds.txt tiedoston. steamcmd/init.sls kopioi garrysmod_ds.txt tiedoston polkuun /home/konsta/garrysmod_ds ja ajaa sen SteamCMD:ssä. Garrysmod_ds -skripti suorittaa Garry's Mod Dedicated Serverin asennuksen SteamCMD:ssä. 
+Seuraavaksi loin steamcmd/init.sls -tiedoston ja garrysmod_ds.txt tiedoston. steamcmd/init.sls kopioi garrysmod_ds.txt tiedoston polkuun ~/garrysmod_ds ja ajaa sen SteamCMD:ssä.
+Garrysmod_ds -skripti suorittaa Garry's Mod Dedicated Serverin asennuksen SteamCMD:ssä. 
 
-Loin myös top.sls -tiedoston, joka ajaa tilat install_steamcmd ja steamcmd.
+Loin myös top.sls -tiedoston, joka ajaa tilat install_steamcmd, steamcmd ja apache2.
 
-SteamCMD ei jostain syystä suostu ajamaan garrysmod_ds -skriptiä Saltilla komennettaessa, mutta paikallisesti suostuu, joten jouduin luomaan bash-tiedoston cheat.sh, joka ajaa SteamCMD:llä garrysmod_ds-skriptin ja ajaa start-server.sh -tiedoston, joka käynnistää SteamCMD:n asentaman Dedicated Serverin halutuilla asetuksilla. 
+SteamCMD ei jostain syystä suostu ajamaan garrysmod_ds -skriptiä Saltilla komennettaessa, mutta paikallisesti suostuu, joten jouduin luomaan ajamaan sen run.sh -skriptissä. 
 
-Loin tiedoston run.sh, joka asentaa Gitin ja Salt-minionin ja kloonaa tiedostot Gitistä. Se myös ajaa highstate.sh -tiedoston.
+Loin tiedoston run.sh, joka:
+-Asentaa Gitin ja Salt-minionin
+-Kloonaa tiedostot Githubista
+-Ajaa ladatut tilat
+-Ajaa SteamCMD:ssä skriptin "garrysmod_ds"
+-Käynnistää pelipalvelimen komennolla "./srcds_run -game garrysmod -maxplayers 16 +gamemode sandbox +map gm_flatgrass"
 
-Highstate.sh ajaa Saltilla state.highstate, sekä cheat.sh -skriptin.
-
-Koottuna: 
-run.sh: Asenna Git ja Salt-minion, kloonaa Gitistä, aja highstate.sh
-highstate.sh: aja state.highstate, aja cheat.sh
-state.highstate: aja top.sls, joka ajaa install_steamcmd ja steamcmd -tilat.
-cheat.sh: aja garrysmod_ds -skripti ja start-server.sh
-start-server.sh: käynnistä pelipalvelin.
 
 Lähteet:
 https://developer.valvesoftware.com/wiki/SteamCMD#Linux.2FOS_X
