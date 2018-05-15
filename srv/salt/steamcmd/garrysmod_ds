@@ -2,7 +2,7 @@
 @NoPromptForPassword 1
 login anonymous
 //Set installation location for garrys mod
-force_install_dir /home/Konsta/garrysmod/
+force_install_dir /home/xubuntu/garrysmod/
 //install & validate garrys mod dedicated server
 app_update 4020 validate
 quit
